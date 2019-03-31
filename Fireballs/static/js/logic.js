@@ -64,6 +64,11 @@ d3.json(url, function(err, response) {
     //console.log(location_y);
     //console.log(location);
 
+    var weather = "http://history.openweathermap.org/data/2.5/history/city?lat={" +
+     location_x + "}&lon={" + location_y + "}&appid=" + "26f870388fc77a582a83d3cf98ae92f2";
+
+    console.log(weather);
+
     //var magnitude = response.features[i].properties.mag;
 
     //var place = response.features[i].properties.place;
@@ -91,6 +96,8 @@ d3.json(url, function(err, response) {
       //scale:
       fillColor: color,
       // Adjust radius
+      
+      //if (energy > 1000)
       radius: energy * 25
     }).bindPopup("<h1> Energy: " + energy + "</h1> <hr> <h2> Date: " + date + "</h2> <h3> Impact: " + impact + "</h3> <h3> velocity: " + velocity + "</h3>").addTo(myMap);
   }
