@@ -35,7 +35,14 @@ d3.json(url, function(err, response) {
     //console.log(location_x);
     var location_y = response.result[i]['lon'];
     //console.log(location_x);
-    var energy = response.result[i]['energy']
+    var energy = response.result[i]['energy'];
+
+    var impact = response.result[i]['impact-e'];
+
+    var date = response.result[i]['date'];
+
+    var velocity = response.result[i]['vel'];
+    
     var location = [location_x, location_y];
 
     if (response.result[i]['lat-dir'] == "S"){
@@ -61,31 +68,31 @@ d3.json(url, function(err, response) {
 
     //var place = response.features[i].properties.place;
 
-    // // Conditionals for countries points
-    // var color = "";
-    // if (magnitude < 1) {
-    //   color = "green";
-    // }
-    // else if (magnitude < 2) {
-    //   color = "yellow";
-    // }
-    // else if (magnitude < 3) {
-    //   color = "orange";
-    // }
-    // else {
-    //   color = "red";
-    // }
+    // Conditionals for countries points
+    var color = "";
+    if (energy < 50) {
+      color = "green";
+    }
+    else if (energy < 500) {
+      color = "yellow";
+    }
+    else if (energy < 5000) {
+      color = "orange";
+    }
+    else {
+      color = "red";
+    }
   
     // Add circles to map
     L.circle([location_x, location_y], {
       fillOpacity: 0.75,
-      color: "red",
-      weight: 3,
+      color: color,
+      weight: 5,
       //scale:
-      //fillColor: color,
+      fillColor: color,
       // Adjust radius
       radius: energy * 25
-    }).bindPopup("<h1> Energy " + energy + "</h1> <hr> <h3> " + "</h3>").addTo(myMap);
+    }).bindPopup("<h1> Energy: " + energy + "</h1> <hr> <h2> Date: " + date + "</h2> <h3> Impact: " + impact + "</h3> <h3> velocity: " + velocity + "</h3>").addTo(myMap);
   }
     //console.log(magnitude)
 
