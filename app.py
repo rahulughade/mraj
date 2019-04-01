@@ -46,7 +46,6 @@ for i in data["data"]:
 
 
 #PART 2 - Creating RESTful API for MongoDB collection
-# mongo.py
 
 from flask import Flask
 from flask import jsonify
@@ -72,40 +71,20 @@ mongo = PyMongo(app)
 def get_all_fireballs():
   fireball = mongo.db.fireballs
   output = []
+
+#Filter out data with null lat and lon values
   for i in fireball.find({"lat":{"$ne":None},"lon":{"$ne":None}}):
     output.append({'date' : i['date'], 
                   'energy' : i['energy'],
                   'impact-e' : i['impact-e'],
                   'lat': i['lat'],
                   'lat-dir': i['lat-dir'],
-                  'newlat':  i['lat']+i['lat-dir'],
                   'lon': i['lon'],
                   'lon-dir': i['lon-dir'],
-                  'newlon':  i['lon']+i['lon-dir'],
                   'alt': i['alt'],
                   'vel': i['vel']
                   })
   return jsonify({'result' : output})
-
-# @app.route('/fireballapi/', methods=['GET'])
-# def get_one_fireball(name):
-#   fireball = mongo.db.fireballs
-#   f = fireball.find_one({'name' : name})
-#   if f:
-#     output = {'name' : s['name'], 'distance' : s['distance']}
-#   else:
-#     output = "No such name"
-#   return jsonify({'result' : output})
-
-# @app.route('/star', methods=['POST'])
-# def add_star():
-#   star = mongo.db.stars
-#   name = request.json['name']
-#   distance = request.json['distance']
-#   star_id = star.insert({'name': name, 'distance': distance})
-#   new_star = star.find_one({'_id': star_id })
-#   output = {'name' : new_star['name'], 'distance' : new_star['distance']}
-#   return jsonify({'result' : output})
 
 if __name__ == '__main__':
     app.run(debug=True)
