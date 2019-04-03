@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Fireball</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/superhero/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+
+  
+</head>
+
+<body>
+    <div class="wrapper">
+        <nav class="navbar navbar-default">
+          <div class="container">  
+          <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <!-- <span class="icon-bar"></span> -->
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>                        
+                </button>
+                <a class="navbar-brand" href="{{ url_for('index') }}">HOME        
+                <!-- <img class="nav-ufo" src="../static/images/fireball.png"> -->
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                <!-- <li><a href="#">HOW</a></li> -->
+                <li><a href="{{ url_for('get_all_fireballs') }}" target="_blank">API DATA</a></li>
+                <li><a href="https://earthsky.org/space/meteor-asteroid-chelyabinsk-russia-feb-15-2013" target="_blank">FUN FACT</a></li>
+                </ul>
+            </div>
+          </div>
+        </div>
+        </nav>
+  
+</body>
+<head>
+    <title>Fun Fact</title>
+</head>
+<body>
+<div class="hero text-center">
+    <h1>Chelyabinsk Fireball</h1>
+  </div>
+</body>
+<div class="api text-center">
+    <p>A small asteroid (65ft/20m in diameter) entered Earth’s atmosphere on February 15th, 2013. The asteriod was moving at 12 miles per
+    second hit a pocket of air and exploded 20 miles (30 km) above the city of Chelyabinsk in Russia. The bright explosion carried 20 to 30 the 
+    energy of Hiroshima atomic bomb causing a shock to six Russian towns and causing 1,500 people to seek medical attention. Injuries were due to mostly
+    to flying glass.
+ </p>
+</div>
+<div class="container-fluid">
+        <div class="row margin-top-10">
+            <div class="col-md-6 col-sm-12 margin-top-10">
+                <div class="col-md-12" >
+                    <h2>Chelyabinsk</h2>
+                    <p><img src="../static/images/meteorChelyabinskRussia2152013.jpg"/>
+                </div>
+            </div>
+        
+        
+        <div class="row margin-top-10">
+            <div class="col-md-6 col-sm-12 margin-top-10">
+                <div class="col-md-12" id="map">
+                    <h2>Hiroshima</h2>
+                    <p><img src="../static/images/Hiroshima.jpeg"/></p>
+                </div>
+</html>
