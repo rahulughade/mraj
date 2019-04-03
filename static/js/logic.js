@@ -1,113 +1,118 @@
-// Function to determine marker size based on population
-function markerSize(population) {
-  return population / 40;
+// Store API query variable
+//var url = "https://ssd-api.jpl.nasa.gov/fireball.api";
+// var url = "http://localhost:5000/fireballapi";
+var url = "/fireballapi";
+
+
+// Grab the data with d3
+d3.json(url, function(err, response) {
+
+  if(err) console.log("error fetching data");
+  console.log(response);
+
+  // Create a new marker cluster group
+  var markers = L.markerClusterGroup();
+
+  // Create empty arrays for altitude and energy
+  var altMarkers = [];
+  var energyMarkers = [];
+  
+
+  //Loop through data
+  for (var i = 0; i < response.result.length; i++) {
+
+    //console.log(response)
+
+    var alt = response.result[i]['alt'];
+
+    var location_x = response.result[i]['lat'];
+    //console.log(location_x);
+    var location_y = response.result[i]['lon'];
+    //console.log(location_x);
+    var energy = response.result[i]['energy'];
+
+    var impact = response.result[i]['impact-e'];
+
+    var date = response.result[i]['date'];
+
+    var velocity = response.result[i]['vel'];
+    
+    var location = [location_x, location_y];
+    
+// Convert directions in decimal
+    if (response.result[i]['lat-dir'] == "S"){
+      location_x = location_x * -1;
+    }
+    else
+    {
+      location_x = location_x * 1;
+    }
+
+    if (response.result[i]['lon-dir'] == "W"){
+      location_y = location_y * -1;
+    }
+    else
+    {
+      location_y = location_y * 1;
+    }
+
+    // Conditionals for energy points
+    var color = "";
+    var radius = "";
+
+    if (energy < 50) {
+      color = "green";
+      radius = 100
+    }
+    else if (energy < 500) {
+      color = "yellow";
+      radius = 200
+    }
+    else if (energy < 5000) {
+      color = "orange";
+      radius = 300
+    }
+    else {
+      color = "red";
+      radius = 700
+    }
+    
+    // Add marker layer
+    markers.addLayer(L.marker([location_x, location_y])
+        .bindPopup("<h4> Energy: " + energy + "</h4> <hr> <h5> Date: " + date + "</h5> <h5> Impact: " + impact + "</h5> <h5> velocity: " + velocity + "</h5>"));
+
+        
+//  Append circles to map for energy and altitude datasets
+  energyMarkers.push(
+    L.circle([location_x, location_y], {
+      fillOpacity: 0.56,
+      color: color,
+      weight: 1,
+      //scale:
+      fillColor: color,
+      // Adjust radius
+      //if (energy > 1000)
+      radius: radius * 1000
+    })
+  
+);
+
+  altMarkers.push(
+    L.circle([location_x, location_y], {
+      fillOpacity: 0.75,
+      color: 'white',
+      weight: 0,
+      //scale:
+      fillColor: 'white',
+      // Adjust radius
+      //if (energy > 1000)
+      radius: alt * 2500
+    })
+  
+  );
 }
 
-// An array containing all of the information needed to create city and state markers
-var locations = [
-  {
-    coordinates: [40.7128, -74.0059],
-    state: {
-      name: "New York State",
-      population: 19795791
-    },
-    city: {
-      name: "New York",
-      population: 8550405
-    }
-  },
-  {
-    coordinates: [34.0522, -118.2437],
-    state: {
-      name: "California",
-      population: 39250017
-    },
-    city: {
-      name: "Lost Angeles",
-      population: 3971883
-    }
-  },
-  {
-    coordinates: [41.8781, -87.6298],
-    state: {
-      name: "Michigan",
-      population: 9928300
-    },
-    city: {
-      name: "Chicago",
-      population: 2720546
-    }
-  },
-  {
-    coordinates: [29.7604, -95.3698],
-    state: {
-      name: "Texas",
-      population: 26960000
-    },
-    city: {
-      name: "Houston",
-      population: 2296224
-    }
-  },
-  {
-    coordinates: [41.2524, -95.9980],
-    state: {
-      name: "Nebraska",
-      population: 1882000
-    },
-    city: {
-      name: "Omaha",
-      population: 446599
-    }
-  }
-];
-
-// Define arrays to hold created city and state markers
-var cityMarkers = [];
-var stateMarkers = [];
-
-// Loop through locations and create city and state markers
-for (var i = 0; i < locations.length; i++) {
-  // Set the marker radius for the state by passing population into the markerSize function
-  stateMarkers.push(
-    L.circle(locations[i].coordinates, {
-      stroke: false,
-      fillOpacity: 0.75,
-      color: "white",
-      fillColor: "white",
-      radius: markerSize(locations[i].state.population)
-    })
-  );
-
-  // Set the marker radius for the city by passing population into the markerSize function
-  cityMarkers.push(
-    L.circle(locations[i].coordinates, {
-      stroke: false,
-      fillOpacity: 0.75,
-      color: "purple",
-      fillColor: "purple",
-      radius: markerSize(locations[i].city.population)
-    })
-  );
-}
-
-// Create base layers
-
-
-// light map tiles
-// var light = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/outdoors-v10/tiles/256/{z}/{x}/{y}?" +
-//   "access_token=pk.eyJ1Ijoia3VsaW5pIiwiYSI6ImNpeWN6bjJ0NjAwcGYzMnJzOWdoNXNqbnEifQ.jEzGgLAwQnZCv9rA6UTfxQ" +
-//   "jEzGgLAwQnZCv9rA6UTfxQ",{
-//     id: "mapbox.light"
-//   });
-
-// // dark map tiles
-// var dark = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/dark-v9/tiles/256/{z}/{x}/{y}?" +
-//   "access_token=pk.eyJ1Ijoia3VsaW5pIiwiYSI6ImNpeWN6bjJ0NjAwcGYzMnJzOWdoNXNqbnEifQ." +
-//   "jEzGgLAwQnZCv9rA6UTfxQ",{
-//     id: "mapbox.dark"
-//   });
-
+// Setup streetmap and darkmap for the map
   var streetmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
     attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
     maxZoom: 18,
@@ -122,39 +127,35 @@ for (var i = 0; i < locations.length; i++) {
     accessToken: API_KEY
   });
 
-// Create two separate layer groups below. One for city markers, and one for states markers
-var states = L.layerGroup(stateMarkers);
-var cities = L.layerGroup(cityMarkers);
+// Create layer groups
+var energies = L.layerGroup(energyMarkers);
+var altitudes = L.layerGroup(altMarkers);
 
-// Create a baseMaps object to contain the streetmap and darkmap
+
 var baseMaps = {
   "Street Map": streetmap,
   "Dark Map": darkmap
 };
 
-// Create an overlayMaps object here to contain the "State Population" and "City Population" layers
+// Create an overlay object
 var overlayMaps = {
-  "State Population": states,
-  "City Population": cities
+  "Energy": energies,
+  "Altitude": altitudes
 };
 
-// // Modify the map so that it will have the streetmap, states, and cities layers
-// L.map("map", {
-//   center: [
-//     37.09, -95.71
-//   ],
-//   zoom: 5
-// });
-
-// Define a map object
+// Define a map object with fullscreen control
 var myMap = L.map("map", {
-  center: [37.09, -95.71],
-  zoom: 5,
-  layers: [streetmap, states, cities],
-  fullscreenControl: true
+  center: [0, 0],
+  zoom: 2,
+  fullscreenControl: true,
+  layers: [streetmap, energies, altitudes]
 });
 
-// Create a layer control, containing our baseMaps and overlayMaps, and add them to the map
+// Add control layer to map
 L.control.layers(baseMaps, overlayMaps, {
   collapsed: false
 }).addTo(myMap);
+
+// Add markers to map
+myMap.addLayer(markers);
+});

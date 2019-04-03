@@ -22,9 +22,19 @@
   integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
   crossorigin=""></script>
 
+  <!-- Marker Cluster JS & CSS -->
+  <script type="text/javascript" src="https://unpkg.com/leaflet.markercluster@1.0.3/dist/leaflet.markercluster.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.css">
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.Default.css">
+
+
   <!-- Add fullscreen option to leaflet map-->
   <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
   <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+
+  <!-- d3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
 </head>
 
 <body>
@@ -34,7 +44,7 @@
           <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <!-- <span class="icon-bar"></span> -->
+                        <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>                        
                 </button>
@@ -44,9 +54,10 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                <!-- <li><a href="#">HOW</a></li> -->
+                
                 <li><a href="{{ url_for('get_all_fireballs') }}" target="_blank">API DATA</a></li>
-                <li><a href="https://earthsky.org/space/meteor-asteroid-chelyabinsk-russia-feb-15-2013" target="_blank">FUN FACT</a></li>
+                <li><a href="{{ url_for('get_scatterdata') }}" target="_blank">SCATTER DATA</a></li>
+                <li><a href="{{ url_for('get_article') }}" target="_blank">ARTICLE</a></li>
                 </ul>
             </div>
           </div>
@@ -56,7 +67,7 @@
           <h1>Fireballs</h1>
           <p>What are they?</p>
         </div>
-        <div class="api text-center">
+        <div class="intro text-center">
             <!-- <p><a href="{{ url_for('get_all_fireballs') }}" target="_blank">Check out this fireball api!</a></p> -->
             <p>A meteoroid is generally defined as an asteroid or comet fragment that orbits the Sun and has an approximate size between ten microns and a meter 
                 or so. Meteors, or “shooting stars,” are the visible paths of meteoroids that have entered the Earth’s atmosphere at high velocities.
@@ -71,6 +82,11 @@
                     <div class="col-md-12" id="map">
                         <p>Hello
                     </div>
+                    Adding a slider
+                    <!-- <div id="sliderContainer">
+                            <input id="timeslide" type="range" min="0" max="11" value="0" step="1"/><br>
+                            <span id="range">January</span>
+                        </div> -->
                 </div>
             
                 <div class="col-md-6 col-sm-12 margin-top-10">
@@ -93,7 +109,8 @@
   <script type="text/javascript" src="../static/js/config.js"></script>
   <!-- Our JS -->
   <script type="text/javascript" src="../static/js/logic.js"></script>
-  <script type="text/javascript" src="../static/js/logic1.js"></script>
+  <!-- <script type="text/javascript" src="../static/js/logic1.js"></script> -->
+  <script type="text/javascript" src="../static/js/scatter.js"></script>
   
 </body>
 </html>

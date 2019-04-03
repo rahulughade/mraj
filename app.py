@@ -86,5 +86,32 @@ def get_all_fireballs():
                   })
   return jsonify({'result' : output})
 
+#Read data from mongodb collection and return to the route
+@app.route('/article')
+def get_article():
+  return render_template('article.html')
+
+#Create route for scatter plot
+#Read data from mongodb collection and return to the route
+@app.route('/scatterapi', methods=['GET'])
+def get_scatterdata():
+  fireball = mongo.db.fireballs
+  output = []
+
+#Filter out data with null lat and lon values
+  # for i in fireball.find({"$and":[{"energy":{"$ne":37500}},{"energy":{"$ne":13000}}]}):
+  for i in fireball.find({"$and":[{"date":{"$ne":"2013-02-15 03:20:33"}},{"date":{"$ne":"2018-12-18 23:48:20"}}]}):
+    output.append({'date' : i['date'], 
+                  'energy' : i['energy'],
+                  'impact-e' : i['impact-e'],
+                  'lat': i['lat'],
+                  'lat-dir': i['lat-dir'],
+                  'lon': i['lon'],
+                  'lon-dir': i['lon-dir'],
+                  'alt': i['alt'],
+                  'vel': i['vel']
+                  })
+  return jsonify({'result' : output})
+
 if __name__ == '__main__':
     app.run(debug=True)

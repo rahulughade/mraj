@@ -29,6 +29,12 @@ body {
   background: #4e5d6c;
 }
 
+.intro{
+    margin-top: 10px;
+    color: #C1A045;
+}
+
+
 /* The code styles the text at the bottom of the footer */
 .footer > .bottom {
   position: absolute;
@@ -91,10 +97,6 @@ select {
 
 .loader {
   margin-top: 50px;
-}
-
-.api {
-    margin-top: 20px;
 }
 
 .margin-top-50 {
