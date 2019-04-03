@@ -182,6 +182,7 @@ var overlayMaps = {
 var myMap = L.map("map", {
   center: [0, 0],
   zoom: 2,
+  fullscreenControl: true,
   layers: [streetmap, states, cities]
 });
 
