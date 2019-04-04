@@ -10,6 +10,10 @@ body {
   margin: 0;
 }
 
+#mapinfo {
+    color: #C1A045;
+}
+
 /* The wrapper contains all of the page's content besides the footer, which is pushed to the bottom of the page */
 .wrapper {
   position: relative;
@@ -25,13 +29,9 @@ body {
   right: 0;
   bottom: 0;
   left: 0;
-  min-height: 100px;
+  min-height: 50px;
   background: #4e5d6c;
-}
-
-.intro{
-    margin-top: 10px;
-    color: #C1A045;
+  text-align: center;
 }
 
 
@@ -43,6 +43,7 @@ body {
   left: 0;
   padding: 5px;
   background: #1b3146;
+  text-align: center;
 }
 
 /* Adding styles to navbar */
@@ -69,19 +70,68 @@ select {
   outline: none;
 }
 
+
+.intro{
+    margin-top: 10px;
+    color: #C1A045;
+}
+
 /* Adding style for scatter plot */
 #scatter{
     text-align: center;
     height: 500px;
+    /* fill: aliceblue; */
     /* width: 100%; */
     /* margin-left: 10px; */
     /* border:1px solid white; */
-    border-width: 2px;
+    /* border-width: 2px;
     border-style: ridge;
-    border-color: turquoise;
+    border-color: aliceblue; */
     
 }
 
+.tooltip {
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    padding: 2px;
+    padding-top: 8px;
+    font: 12px sans-serif;
+    color: black;
+    text-align: center;
+    background: #c6b5e0;
+    border: 0;
+    border-radius: 3px;
+  }
+
+  .axis-text {
+    /* font-family: sans-serif; */
+    font-weight: bold;
+    fill: #1b3146;
+    text-anchor: middle;
+  }
+  
+  .active {
+    font-weight: bold;
+    fill: #1b3146;
+    font-size: 13px;
+    transition: fill 0.3s ease-out;
+    text-anchor: middle;
+  }
+  
+  .inactive {
+    font-weight: lighter;
+    fill: #1b3146;
+    font-size: 13px;
+    /* fill: black; */
+    transition: fill 0.3s ease-out;
+    text-anchor: middle;
+  }
+  
+  .inactive:hover {
+    fill: #e75480;
+    cursor: pointer;
+  }  
 /* Adding style for map */
 #map {
     height: 500px;
@@ -106,6 +156,11 @@ select {
 .margin-top-10 {
     margin-top: 10px;
 }
+
+strong { 
+    font-weight: bold;
+    color: whitesmoke;
+  }
 
 /* The styles for the parallax */
 .hero {
@@ -141,7 +196,7 @@ select {
 /* media queries which will only be activated at specific screen sizes */
 @media (max-width: 990px){
     .wrapper {
-        background-color: teal;
+        background-color: rgb(39, 38, 38);
     }
 }
 

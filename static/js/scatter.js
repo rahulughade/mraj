@@ -1,9 +1,9 @@
-var svgWidth = 500;
+var svgWidth = 550;
 var svgHeight = 450;
 
 var margin = {
   top: 20,
-  right: 10,
+  right: 20,
   bottom: 80,
   left: 60
 };
@@ -23,6 +23,12 @@ var svg = d3
   .append("svg")
   .attr("width", svgWidth)
   .attr("height", svgHeight);
+
+  svg.append("rect")
+  .attr("width", "100%")
+  .attr("height", "100%")
+  .attr("fill", "white")
+  .attr("fill-opacity", 0.9);
 
 // Append an SVG group
 var chartGroup = svg.append("g")
@@ -80,7 +86,7 @@ function updateToolTip(chosenXAxis, circlesGroup) {
     .attr("class", "tooltip")
     .offset([80, -60])
     .html(function(d) {
-      return (`${label} ${d[chosenXAxis]}`);
+      return (`Energy: ${d.energy}<br> ${label} ${d[chosenXAxis]}`);
     });
 
   circlesGroup.call(toolTip);
@@ -102,24 +108,7 @@ d3.json("/scatterapi", function(err, fireballdata) {
   var result = fireballdata.result;
 // console.log(result);
 //   // parse data
-//   fireballdata.forEach(function(data) {
-//     data.vel = +data.vel;
-//     data.alt = +data.alt;
-//     data.energy = +data.energy;
-//   });
 
-// fireballdata.vel = +fireballdata.vel;
-// fireballdata.alt = +fireballdata.alt;
-// fireballdata.energy = +fireballdata.energy;
-
-// for (var i = 0; i < result.length; i++) {
-//     // var obj = result[i]
-//     vel = result[i]['vel'];
-//     alt = result[i]['alt'];
-//     energy = result[i]['energy'];
-//     // impact = fireballData[i]['impact-e'];
-//     console.log(vel);
-// }
 result.forEach(function(data){
     // console.log(data["date"]);
     data.vel = +data.vel;
@@ -132,7 +121,7 @@ result.forEach(function(data){
 
   // Create y scale function
   var yLinearScale = d3.scaleLinear()
-    .domain([0, d3.max(result, d => d.energy)])
+    .domain([-50, d3.max(result, d => d.energy)])
     .range([height, 0]);
 
   // Create initial axis functions
@@ -169,23 +158,23 @@ result.forEach(function(data){
     .attr("y", 20)
     .attr("value", "vel") // value to grab for event listener
     .classed("active", true)
-    .text("Velocity in ");
+    .text("Velocity in (km/s)");
 
   var altLabel = labelsGroup.append("text")
     .attr("x", 0)
     .attr("y", 40)
     .attr("value", "alt") // value to grab for event listener
     .classed("inactive", true)
-    .text("Altitude in ");
+    .text("Altitude in (km)");
 
   // append y axis
   chartGroup.append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 0 - margin.left)
-    .attr("x", 0 - (height / 2))
+    .attr("x", 0 - (height /2))
     .attr("dy", "1em")
     .classed("axis-text", true)
-    .text("Total Energy");
+    .text("Total Radiated Energy in (J)");
 
   // updateToolTip function above csv import
   var circlesGroup = updateToolTip(chosenXAxis, circlesGroup);

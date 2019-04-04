@@ -55,9 +55,9 @@
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
                 
-                <li><a href="{{ url_for('get_all_fireballs') }}" target="_blank">API DATA</a></li>
+                <li><a href="{{ url_for('get_all_fireballs') }}" target="_blank">MAP DATA</a></li>
                 <li><a href="{{ url_for('get_scatterdata') }}" target="_blank">SCATTER DATA</a></li>
-                <li><a href="{{ url_for('get_article') }}" target="_blank">ARTICLE</a></li>
+                <li><a href="{{ url_for('get_article') }}" target="_blank">NEWS ARTICLE</a></li>
                 </ul>
             </div>
           </div>
@@ -80,30 +80,28 @@
             <div class="row margin-top-10">
                 <div class="col-md-6 col-sm-12 margin-top-10">
                     <div class="col-md-12" id="map">
-                        <p>Hello
+                        <!-- <p>Hello</p> -->
                     </div>
-                    Adding a slider
-                    <!-- <div id="sliderContainer">
-                            <input id="timeslide" type="range" min="0" max="11" value="0" step="1"/><br>
-                            <span id="range">January</span>
-                        </div> -->
+                    <p id="mapinfo">Above map contains fireball incidents captured by NASA since 1988. Map contains dynamic clustering for 
+                        position markers.  </p>
                 </div>
             
                 <div class="col-md-6 col-sm-12 margin-top-10">
                     <div class="col-md-12" id="scatter">
-                        <p>Hello again
+                        <p>Interactive Scatter Plot</p> 
                     </div>
+                    
                 </div>
             </div>
-            <div class="row margin-top-10">
+            <!-- <div class="row margin-top-10">
                 <div class="col-md-6 col-sm-12 margin-top-10">
                     <div class="col-md-12" id="map">
                         <p>Hello</p>
                     </div>
             </div>
-        </div>        
+        </div>         -->
         <footer class="footer">
-                <span class="bottom">Thank you for visiting!</span>
+                <span class="bottom">Thank you!</span>
               </footer>
   <!-- API key -->
   <script type="text/javascript" src="../static/js/config.js"></script>

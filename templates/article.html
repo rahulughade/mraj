@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Fireball</title>
+    <title>Article</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -11,9 +11,30 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/superhero/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    
+
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" type= "text/css" href="{{ url_for('static',filename='css/style.css') }}">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+  integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+  crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+  integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
+  crossorigin=""></script>
+
+  <!-- Marker Cluster JS & CSS -->
+  <script type="text/javascript" src="https://unpkg.com/leaflet.markercluster@1.0.3/dist/leaflet.markercluster.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.css">
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.Default.css">
 
 
-  
+  <!-- Add fullscreen option to leaflet map-->
+  <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+  <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+
+  <!-- d3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
 </head>
 
 <body>
@@ -23,9 +44,9 @@
           <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <!-- <span class="icon-bar"></span> -->
                         <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>                        
+                        <span class="icon-bar"></span>
+                        <!-- <span class="icon-bar"></span>                         -->
                 </button>
                 <a class="navbar-brand" href="{{ url_for('index') }}">HOME        
                 <!-- <img class="nav-ufo" src="../static/images/fireball.png"> -->
@@ -33,45 +54,61 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                <!-- <li><a href="#">HOW</a></li> -->
-                <li><a href="{{ url_for('get_all_fireballs') }}" target="_blank">API DATA</a></li>
-                <li><a href="https://earthsky.org/space/meteor-asteroid-chelyabinsk-russia-feb-15-2013" target="_blank">FUN FACT</a></li>
+                
+                <li><a href="{{ url_for('get_all_fireballs') }}" target="_blank">MAP DATA</a></li>
+                <li><a href="{{ url_for('get_scatterdata') }}" target="_blank">SCATTER DATA</a></li>
+                <!-- <li><a href="{{ url_for('get_article') }}" target="_blank">ARTICLE</a></li> -->
                 </ul>
             </div>
           </div>
         </div>
         </nav>
-  
-</body>
-<head>
-    <title>Fun Fact</title>
-</head>
-<body>
-<div class="hero text-center">
-    <h1>Chelyabinsk Fireball</h1>
-  </div>
-</body>
-<div class="api text-center">
-    <p>A small asteroid (65ft/20m in diameter) entered Earth’s atmosphere on February 15th, 2013. The asteriod was moving at 12 miles per
-    second hit a pocket of air and exploded 20 miles (30 km) above the city of Chelyabinsk in Russia. The bright explosion carried 20 to 30 the 
-    energy of Hiroshima atomic bomb causing a shock to six Russian towns and causing 1,500 people to seek medical attention. Injuries were due to mostly
-    to flying glass.
- </p>
-</div>
-<div class="container-fluid">
-        <div class="row margin-top-10">
-            <div class="col-md-6 col-sm-12 margin-top-10">
-                <div class="col-md-12" >
-                    <h2>Chelyabinsk</h2>
-                    <p><img src="../static/images/meteorChelyabinskRussia2152013.jpg"/>
+        <div class="hero text-center">
+          <h1>Chelyabinsk Fireball</h1>
+          <p>What happened in February 2013?</p>
+        </div>
+        <div class="intro text-center">
+            <!-- <p><a href="{{ url_for('get_all_fireballs') }}" target="_blank">Check out this fireball api!</a></p> -->
+            <p>A small asteroid (65ft/20m in diameter) entered Earth’s atmosphere on February 15th, 2013. The asteriod was moving at 12 miles per second 
+                hit a pocket of air and exploded 20 miles (30 km) above the city of Chelyabinsk in Russia. The bright explosion carried <strong>20 to 30 
+                times the energy of Hiroshima atomic bomb </strong> causing a shock to six Russian towns and causing 1,500 people to seek medical attention. 
+                Injuries were due to mostly to flying glass.
+
+            </p>
+        </div>
+        
+        <div class="container-fluid">
+            <div class="row margin-top-10">
+                <div class="col-md-6 col-sm-12 margin-top-10">
+                    <div class="col-md-12" id="chelyabinsk">
+                        <h2>Chelyabinsk</h2>
+                        <p><img src="../static/images/meteorChelyabinskRussia2152013.jpg"/>
+                    </div>
+                </div>
+            
+                <div class="col-md-6 col-sm-12 margin-top-10">
+                    <div class="col-md-12" id="hiroshima">
+                        <h2>Hiroshima</h2>
+                        <p><img src="../static/images/Hiroshima.jpeg"/></p>
+                    </div>
                 </div>
             </div>
-        
-        
-        <div class="row margin-top-10">
-            <div class="col-md-6 col-sm-12 margin-top-10">
-                <div class="col-md-12" id="map">
-                    <h2>Hiroshima</h2>
-                    <p><img src="../static/images/Hiroshima.jpeg"/></p>
-                </div>
+            <!-- <div class="row margin-top-10">
+                <div class="col-md-6 col-sm-12 margin-top-10">
+                    <div class="col-md-12" id="map">
+                        <p>Hello</p>
+                    </div>
+            </div>
+        </div>         -->
+        <footer class="footer">
+                <span class="bottom">Thank you!</span>
+              </footer>
+  <!-- API key -->
+  <script type="text/javascript" src="../static/js/config.js"></script>
+  <!-- Our JS -->
+  <script type="text/javascript" src="../static/js/logic.js"></script>
+  <!-- <script type="text/javascript" src="../static/js/logic1.js"></script> -->
+  <script type="text/javascript" src="../static/js/scatter.js"></script>
+  
+</body>
 </html>

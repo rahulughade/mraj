@@ -79,7 +79,7 @@ d3.json(url, function(err, response) {
     
     // Add marker layer
     markers.addLayer(L.marker([location_x, location_y])
-        .bindPopup("<h4> Energy: " + energy + "</h4> <hr> <h5> Date: " + date + "</h5> <h5> Impact: " + impact + "</h5> <h5> velocity: " + velocity + "</h5>"));
+        .bindPopup("<h5> Date: " + date + "</h5> <hr> <h6> Total Energy(J): " + energy + "</h6> <h6> Impact Energy(kt): " + impact + "</h6> <h6> Velocity(km/s): " + velocity + "</h6><h6> Altitude(km): " + alt + "</h6>"));
 
         
 //  Append circles to map for energy and altitude datasets
@@ -139,8 +139,8 @@ var baseMaps = {
 
 // Create an overlay object
 var overlayMaps = {
-  "Energy": energies,
-  "Altitude": altitudes
+  "Total Energy layer": energies,
+  "Altitude layer": altitudes
 };
 
 // Define a map object with fullscreen control
